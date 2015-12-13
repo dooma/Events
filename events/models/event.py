@@ -5,16 +5,25 @@ from datetime import datetime
 class Event():
 
     def __init__(self, date = None, time = None, description = None):
+        '''
+        Event constructor
+        :param date:
+        :param time:
+        :param description:
+        :return: object
+        '''
         self.validate(date, time, description)
         self.date, self.time, self.description = date, time, description
 
     def validate(self, date, time, description):
         '''
-        Raise exceptions if parameters doesn't have right format
+        Validates event parameters
         :param date:
         :param time:
         :param description:
-        :return:
+        :return: None
+        :raise: AttributeError if attributes are not provided
+        :raise: ValueError if values are invalid
         '''
         if not date or not time or not description:
             raise AttributeError("Please provide all fields")
