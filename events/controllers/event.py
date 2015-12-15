@@ -126,7 +126,7 @@ class EventController():
         occurences = self.determine_occurences(relations)
 
         relations.sort(
-            key=lambda rel: EventController.find_dict(occurences, rel[0].get_id())[rel[0].get_id()],
+            key=lambda rel: EventController.find_dict2(occurences, rel[0].get_id())[rel[0].get_id()],
             reverse=True
         )
 
@@ -142,7 +142,7 @@ class EventController():
         output = ""
 
         for rel in unique_relations:
-            number_events = EventController.find_dict(occurences, rel[0].get_id())[rel[0].get_id()]
+            number_events = EventController.find_dict2(occurences, rel[0].get_id())[rel[0].get_id()]
             output += str(rel[0].get_id()) + "\t" + rel[0].get_description() + "\tparticipa \t" + str(number_events) + " persoane\n"
 
         return output
@@ -185,7 +185,7 @@ class EventController():
         for relation in relations:
             event_id = relation[0].get_id()
             try:
-                occurence = EventController.find_dict(occurences, event_id)
+                occurence = EventController.find_dict2(occurences, event_id)
             except:
                 occurences.append({
                     event_id: 0
@@ -213,3 +213,22 @@ class EventController():
                 continue
 
         raise ValueError
+
+    @staticmethod
+    def find_dict2(array, id):
+        '''
+        Find dictionary with given id
+        :param array:
+        :param id:
+        :return: dictionary
+        :raise: ValueError if id is not found
+        '''
+
+        if not len(array):
+            raise ValueError
+
+        try:
+            array[0][id]
+            return array[0]
+        finally:
+            return find_dict2(array[1:], id)
